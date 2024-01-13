@@ -8,3 +8,4 @@ Pillow
 bs4
 openpyxl
 xlrd
+frontend
