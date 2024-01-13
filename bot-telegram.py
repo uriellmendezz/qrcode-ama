@@ -4,8 +4,9 @@ import time
 import pandas as pd
 import telebot
 import functions
+import settings as stt
 
-bot = telebot.TeleBot("6883610456:AAH9_JmBCw7OalD4kp7PVHNX0bR7RYig2ig")
+bot = telebot.TeleBot(stt.bot_telegram_token)
 @bot.message_handler(content_types=['document'])
 
 def handle_docs(message):
