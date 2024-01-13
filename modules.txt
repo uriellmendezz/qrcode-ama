@@ -1,0 +1,10 @@
+pandas
+pyTelegramBotAPI
+reportlab
+PyPDF2
+fitz
+qrcode
+Pillow
+bs4
+openpyxl
+xlrd
