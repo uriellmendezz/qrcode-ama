@@ -107,11 +107,13 @@ def buscar_producto_en_pagina(codigo, producto):
     link = f"https://www.amahogar.com.ar/busqueda?controller=search&s={search}"
     response = requests.get(link)
     soup = BeautifulSoup(response.content, 'html.parser')
-
-    articulo = soup.find_all('div', {'class':'pro_outer_box clearfix home_default'})[0]
-    url = articulo.find('a', {'itemprop':'url'}).get_attribute_list('href')[0]
-
-    return url
+    try:
+        articulo = soup.find_all('div', {'class':'pro_outer_box clearfix home_default'})[0]
+        url = articulo.find('a', {'itemprop':'url'}).get_attribute_list('href')[0]
+        return url
+    except IndexError as e:
+        return 'no-link'
+    
 
 def create_qr(PRODUCTO, CODIGO, LINK, LOGO_PATH):
     # Genera el código QR con un nivel de corrección de errores más alto
@@ -201,6 +203,7 @@ def agregar_productos(productos):
     df_principal = pd.read_csv('productos.csv', sep=',')
 
     df_combinado = pd.concat([df_principal, productos], ignore_index=True, axis=0)
+    df_combinado = df_combinado.drop_duplicates(subset='codigo').reset_index(drop=True)
     df_combinado.to_csv('productos.csv', index=False, sep=',')
 
 def generate_pdf_with_multiple_images(image_paths, output_path, max_per_row):
